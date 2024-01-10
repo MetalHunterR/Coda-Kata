@@ -24,19 +24,14 @@ public class Main {
         HashMap<String, ArrayList<String>>  result = new HashMap<>();
 
         try(Scanner reader = new Scanner(new File("wordlist.txt"))) {
-            String tmpStr;
+            String[] keyWord = createKeyFromWord(reader.nextLine());
 
             while(reader.hasNextLine()) {
-                String baseWord = reader.nextLine().toLowerCase();
-                char[] tmpCharArray = baseWord.toCharArray();
-                Arrays.sort(tmpCharArray);
-                tmpStr = new String(tmpCharArray);
-
-                if (!result.containsKey(tmpStr)) {
-                    result.put(tmpStr, new ArrayList<>());
+                if (!result.containsKey(keyWord[0])) {
+                    result.put(keyWord[0], new ArrayList<>());
                 }
 
-                result.get(tmpStr).add(baseWord);
+                result.get(keyWord[0]).add(keyWord[1]);
             }
 
         } catch (Exception ex) {
@@ -46,29 +41,9 @@ public class Main {
         return result;
     }
 
-    /*
-    private static ArrayList<String> findAnagrams(String baseWord, ArrayList<String> wordList) {
-        ArrayList<String> result = new ArrayList<>();
-
-        wordList.forEach((checkWord) -> {
-            if (!baseWord.equals(checkWord) && baseWord.length() == checkWord.length()) {
-
-                char[] baseTmp = baseWord.toCharArray();
-                char[] checkTmp = checkWord.toCharArray();
-
-                Arrays.sort(baseTmp);
-                Arrays.sort(checkTmp);
-
-                String sortedBase = new String(baseTmp);
-                String sortedCheck = new String(checkTmp);
-
-                if (sortedBase.equals(sortedCheck)) {
-                    result.add(checkWord);
-                }
-            }
-        });
-
-        return result;
+    private static String[] createKeyFromWord(String baseWord) {
+        char[] tmpCharArray = baseWord.toLowerCase().toCharArray();
+        Arrays.sort(tmpCharArray);
+        return new String[] { new String(tmpCharArray), baseWord };
     }
-     */
 }
