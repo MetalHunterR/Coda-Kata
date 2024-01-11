@@ -16,7 +16,7 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
         } else {
             SingleListNode current = head;
 
-            while (current.nextNode != null) {
+            while (current.nextNode != null && !current.nextNode.equals(head)) {
                 current = current.nextNode;
             }
             current.nextNode = newNode;
@@ -30,14 +30,17 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
         SingleListNode current = head;
         SingleListNode previous = null;
 
-        while ((current != null && current.nextNode.equals(head)) && !current.nodeValue.equals(item)) {
+        int idx = 0;
+        while (idx < getSize() && current != null && !current.nodeValue.equals(item)) {
             previous = current;
             current = current.nextNode;
+            idx++;
         }
 
         if (current != null) {
             if (previous == null) {
                 head = current.nextNode;
+                head.nextNode = null;
             } else {
                 previous.nextNode = current.nextNode;
             }
@@ -51,11 +54,13 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
     public T find(T item) {
         SingleListNode current = head;
 
-        while ((current != null && current.nextNode.equals(head)) && !current.nodeValue.equals(item)) {
+        int idx = 0;
+        while (idx < getSize() && current != null && !current.nodeValue.equals(item)) {
             current = current.nextNode;
+            idx++;
         }
 
-        boolean bFound = current != null;
+        boolean bFound = current != null && idx < getSize();
         if (bFound) {
             return current.nodeValue;
         }
@@ -67,9 +72,11 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
         List<T> result = new ArrayList<>();
         SingleListNode current = head;
 
-        while (current != null && !current.nextNode.equals(head)) {
+        int idx = 0;
+        while (idx < getSize() && current != null) {
             result.add(current.nodeValue);
             current = current.nextNode;
+            idx++;
         }
         return result;
     }
