@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime start = LocalDateTime.now();
         readTextFile().forEach((key, value) -> {
             StringBuilder sb = new StringBuilder();
             sb.append("-".repeat(15));
@@ -15,9 +14,6 @@ public class Main {
             value.forEach((word) -> sb.append(word).append(", "));
             System.out.println(sb);
         });
-        LocalDateTime stop = LocalDateTime.now();
-
-        System.out.println(ChronoUnit.MILLIS.between(start, stop));
     }
 
     private static HashMap<String, ArrayList<String>> readTextFile() {
