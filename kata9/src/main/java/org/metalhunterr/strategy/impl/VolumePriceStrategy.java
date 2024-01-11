@@ -19,6 +19,6 @@ public class VolumePriceStrategy extends BasicPriceStrategy {
         if (order.getItemAmount() >= volumeThreshold) {
             discount = volumeThreshold * order.getOrderedItem().getItemPrice() - volumePrice;
         }
-        return basePrice - volumePrice;
+        return basePrice - discount;
     }
 }

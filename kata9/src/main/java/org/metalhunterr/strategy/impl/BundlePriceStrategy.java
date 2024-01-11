@@ -13,7 +13,7 @@ public class BundlePriceStrategy implements PriceStrategy {
     @Override
     public double getTotalPriceOfOrder(ItemOrder order) {
         double fullPricedItems = (order.getItemAmount() % bundleThreshold) * order.getOrderedItem().getItemPrice();
-        double discountedPrice = (double) (order.getItemAmount() / bundleThreshold) * bundlePrice;
+        double discountedPrice = (order.getItemAmount() / bundleThreshold) * bundlePrice;
 
         return fullPricedItems + discountedPrice;
     }
