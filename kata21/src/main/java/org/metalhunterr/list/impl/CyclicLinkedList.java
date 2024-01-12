@@ -12,7 +12,7 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
         newNode.nodeValue = item;
 
         if (head == null) {
-            head = newNode;
+            head = newNode; // TODO: Link head to itselft if only 1 element is present
         } else {
             SingleListNode current = head;
 

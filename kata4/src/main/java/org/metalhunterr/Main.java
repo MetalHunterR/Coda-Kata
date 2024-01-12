@@ -25,8 +25,7 @@ public class Main {
             while ((line = reader.readLine()) != null) {
                 List<String> tempList = Arrays.asList(line
                         .trim()
-                        .replaceAll("[space]", "")
-                        .replaceAll("[*]", "")
+                        .replaceAll("\\*", "")
                         .split("\\s+"));
 
                 if (tempList.size() > 1) {
