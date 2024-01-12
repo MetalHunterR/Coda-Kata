@@ -13,8 +13,8 @@ public class Main {
     static final int FOOTBALL_AGAINST_COLUMN = 8;
 
     public static void main(String[] args) {
-        System.out.println(getSmallestValueByIndexes(readDataFromFile("weather.dat"), WEATHER_MIN_COLUMN, WEATHER_MAX_COLUMN, true));
-        System.out.println(getSmallestValueByIndexes(readDataFromFile("football.dat"), FOOTBALL_AGAINST_COLUMN, FOOTBALL_FOR_COLUMN, false));
+        System.out.println(getSmallestValueByIndexes(readDataFromFile("weather.dat"), WEATHER_MIN_COLUMN, WEATHER_MAX_COLUMN, false));
+        System.out.println(getSmallestValueByIndexes(readDataFromFile("football.dat"), FOOTBALL_FOR_COLUMN, FOOTBALL_AGAINST_COLUMN, true));
     }
 
     public static ArrayList<ArrayList<String>> readDataFromFile(String fileName) {
@@ -23,10 +23,14 @@ public class Main {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             while ((line = reader.readLine()) != null) {
-                List<String> tempList = Arrays.asList(line.trim().replace("\\s+", "").split("\\s+"));
+                List<String> tempList = Arrays.asList(line
+                        .trim()
+                        .replaceAll("[space]", "")
+                        .replaceAll("[*]", "")
+                        .split("\\s+"));
 
                 if (tempList.size() > 1) {
-                    result.add(new ArrayList<String>(tempList));
+                    result.add(new ArrayList<>(tempList));
                 }
             }
         } catch (Exception ex) {
@@ -36,22 +40,18 @@ public class Main {
         return result;
     }
 
-    public static String getSmallestValueByIndexes(ArrayList<ArrayList<String>> inputData, int maxValueColumnIdx, int minValueColumnIdx, boolean bAllowNegativeValues) {
+    public static String getSmallestValueByIndexes(ArrayList<ArrayList<String>> inputData, int maxValueColumnIdx, int minValueColumnIdx, boolean bUseUniqueResult) {
         String foundResult = "";
-        int minDifferenceValue = Integer.MAX_VALUE;
+        double minDifferenceValue = Double.MAX_VALUE;
 
-        for(ArrayList<String> dataLine : inputData) {
-            try {
-                int localMaxDifferenceValue = Integer.parseInt(dataLine.get(maxValueColumnIdx));
-                int localMinDifferenceValue = Integer.parseInt(dataLine.get(minValueColumnIdx));
-                int localDifference = localMaxDifferenceValue - localMinDifferenceValue;
+        for(int i = 1; i < inputData.size(); i++) {
+            double localMaxDifferenceValue = Double.parseDouble(inputData.get(i).get(maxValueColumnIdx));
+            double localMinDifferenceValue = Double.parseDouble(inputData.get(i).get(minValueColumnIdx));
+            double localDifference = Math.abs(localMaxDifferenceValue - localMinDifferenceValue);
 
-                if (localDifference > 0 && minDifferenceValue > localDifference) {
-                        minDifferenceValue = localDifference;
-                        foundResult = bAllowNegativeValues ? dataLine.getFirst() : dataLine.get(1);
-                }
-            } catch (Exception ex) {
-                continue; // Never do this...
+            if (minDifferenceValue > localDifference) {
+                minDifferenceValue = localDifference;
+                foundResult = bUseUniqueResult ? inputData.get(i).get(1) : inputData.get(i).getFirst();
             }
         }
 

@@ -40,6 +40,11 @@ public class Main {
     }
 
     private static int generateHash(String word) {
-        return Math.abs(new BigInteger(1, word.getBytes()).intValue() % bloomBuffer.length - 1);
+        int bytes = 0;
+        for (int i = 0; i < word.length(); i++ ) {
+            bytes =+ word.charAt(i);
+        }
+
+        return Math.abs(bytes % (bloomBuffer.length - 1));
     }
 }
