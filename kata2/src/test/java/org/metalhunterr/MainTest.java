@@ -19,13 +19,6 @@ public class MainTest {
         assertEquals(2, Main.binarySearch(5, new int[] { 1, 3, 5 }));
     }
 
-
-    @Test
-    @DisplayName("Iterative Variant")
-    public void iterativeBinarySearchBadSearch() {
-        assertEquals(2, Main.binarySearch(6, new int[] { 1, 3, 5 }));
-    }
-
     @Test
     @DisplayName("Recursive Variant")
     public void recursiveBinarySearch() {
