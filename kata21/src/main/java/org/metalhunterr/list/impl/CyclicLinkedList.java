@@ -10,9 +10,11 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
     public void add(T item) {
         SingleListNode newNode = new SingleListNode();
         newNode.nodeValue = item;
+        newNode.nextNode = new SingleListNode();
 
         if (head == null) {
-            head = newNode; // TODO: Link head to itselft if only 1 element is present
+            head = newNode;
+            head.nextNode = head;
         } else {
             SingleListNode current = head;
 
@@ -37,7 +39,7 @@ public class CyclicLinkedList<T> extends SingleLinkedList<T> {
             idx++;
         }
 
-        if (current != null) {
+        if (idx < getSize() && current != null) {
             if (previous == null) {
                 head = current.nextNode;
                 head.nextNode = null;

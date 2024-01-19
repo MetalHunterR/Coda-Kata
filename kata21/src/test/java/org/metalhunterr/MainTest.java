@@ -8,6 +8,7 @@ import org.metalhunterr.list.impl.DoublyLinkedList;
 import org.metalhunterr.list.impl.SingleLinkedList;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,6 +40,7 @@ class MainTest {
 
         assertEquals(1, testList.getSize());
         assertNull(testList.find("fred"));
+        assertThrows(NoSuchElementException.class, () -> testList.remove("fred"));
     }
 
     @Test
@@ -67,6 +69,7 @@ class MainTest {
 
         assertEquals(1, testList.getSize());
         assertNull(testList.find("fred"));
+        assertThrows(NoSuchElementException.class, () -> testList.remove("fred"));
     }
 
     @Test
@@ -96,5 +99,6 @@ class MainTest {
 
         assertEquals(2, testList.getSize());
         assertNull(testList.find("wilma"));
+        assertThrows(NoSuchElementException.class, () -> testList.remove("wilma"));
     }
 }
